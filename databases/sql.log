@@ -1,0 +1,595 @@
+timestamp: 2021-06-28T16:26:30.422803
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2021-06-28T16:26:30.467663
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2021-06-28T16:26:30.510723
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2021-06-28T16:26:30.552430
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2021-06-28T16:26:30.595455
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2021-06-28T16:26:30.635942
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2021-06-28T16:27:41.766799
+CREATE TABLE "configuration_grc"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "language_grc" CHAR(512),
+    "organization_grc" CHAR(512)
+);
+success!
+timestamp: 2021-06-28T16:29:19.006818
+CREATE TABLE "email"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "server_email" CHAR(512),
+    "sender_email" CHAR(512),
+    "login_email" CHAR(512),
+    "tls_email" CHAR(1)
+);
+success!
+timestamp: 2021-06-28T16:29:19.087470
+CREATE TABLE "risk_classification"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512),
+    "description" TEXT,
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+success!
+timestamp: 2021-07-27T22:43:38.428850
+CREATE TABLE "risk_treatment"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+timestamp: 2021-07-28T04:31:36.079374
+CREATE TABLE "grc_settings"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "laguage" CHAR(1)
+);
+success!
+timestamp: 2021-07-29T20:14:05.823624
+CREATE TABLE "department"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "responsible" TEXT,
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+timestamp: 2021-07-29T20:19:52.476597
+ALTER TABLE "grc_settings" ADD "company_name" CHAR(512);
+success!
+timestamp: 2021-07-29T21:24:32.139695
+ALTER TABLE "grc_settings" ADD "grc_language" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-07-31T19:15:42.224766
+CREATE TABLE "process_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-08-03T00:02:03.932905
+CREATE TABLE "maturity_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "m_level" INTEGER UNIQUE,
+    "description" TEXT,
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+timestamp: 2021-08-03T00:02:29.688595
+CREATE TABLE "process"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "p_owner" CHAR(512),
+    "p_file" CHAR(512),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-08-04T22:26:33.342685
+CREATE TABLE "system_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-08-04T23:11:19.351314
+ALTER TABLE "process" ADD "process_type_id" INTEGER REFERENCES "process_type" ("id") ON DELETE CASCADE  ;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-08-06T02:52:17.358132
+CREATE TABLE "objective_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512),
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
