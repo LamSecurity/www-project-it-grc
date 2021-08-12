@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import datetime
 # -------------------------------------------------------------------------
 # AppConfig configuration made easy. Look inside private/appconfig.ini
 # Auth is for authenticaiton and access control
@@ -132,20 +132,24 @@ if configuration.get('scheduler.enabled'):
 db.define_table('risk_classification',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
 db.define_table('risk_treatment',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
@@ -153,30 +157,36 @@ db.define_table('department',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
     Field('responsible', 'text', label=T('Responsible')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
 db.define_table('process_type',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
 db.define_table('system_type',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
@@ -184,10 +194,12 @@ db.define_table('maturity_level',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('m_level', 'integer', label=T('Level'), unique=True),
     Field('description', 'text', label=T('Description')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
@@ -197,24 +209,84 @@ db.define_table('process',
     Field('p_owner', 'string', label=T('Owner')),
     Field('p_file', 'upload', label=T('Flow Diagram')),
     Field('process_type_id', 'reference process_type', label=T('Process Type')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
 db.define_table('objective_type',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
-    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
-    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
 
+db.define_table('company',
+    Field('name', 'string', label=T('Name'), unique=True),
+    Field('description', 'text', label=T('Description')),
+    Field('mision', 'text', label=T('Mision')),
+    Field('vision', 'text', label=T('Vision')),
+    Field('c_value', 'text', label=T('Values')),
+    Field('security_requirement', 'text', label=T('Security Requirement')),
+    Field('framework_used', 'text', label=T('Framework Used')),
+    Field('product_service', 'text', label=T('Product/Service')),
+    Field('c_file', 'text', label=T('File')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.name)
+    )
 
+db.define_table('impact_level',
+    Field('name', 'string', label=T('Name'), unique=True),
+    Field('i_level', 'string', label=T('Level'), unique=True),
+    Field('description', 'text', label=T('Description')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.name)
+    )
+
+db.define_table('probability_level',
+    Field('name', 'string', label=T('Name'), unique=True),
+    Field('p_level', 'string', label=T('Level'), unique=True),
+    Field('description', 'text', label=T('Description')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.name)
+    )
+
+db.define_table('company_objective',
+    Field('name', 'string', label=T('Name'), unique=True),
+    Field('description', 'text', label=T('Description')),
+    Field('objective_type_id', 'reference objective_type', label=T('Objective Type')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.name)
+    )
 
 db.define_table('grc_settings',
     Field('grc_language', 'string', label=T('Language')),

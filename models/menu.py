@@ -7,23 +7,15 @@ response.menu = [
         #LI(_class="divider"),
         (T('Risk Classification'), False, URL('default', 'risk_classification')),
         (T('Risk Treatment'), False, URL('default', 'risk_treatment')),
-        #(T('Risk Factor Group'), False, URL('default', 'GrupoFactorRiesgo')),
-        #LI(_class="divider"),
-        #(T('Control Clasification'), False, URL('default', 'ClasificacionControl')),
-        #(T('Control Type'), False, URL('default', 'TipoControl')),
-        #(T('Control Group'), False, URL('default', 'GrupoControl')),
-        #(T('Objetive Type'), False, URL('default', 'TipoObjetivo')),
-        #LI(_class="divider"),
-        #LI(_class="divider"),
-        #(T('Region'), False, URL('default', 'Region')),
-        #(T('Department'), False, URL('default', 'Direccion')),
-        #(T('Policy Catalog'), False, URL('default', 'CatalogoPolitica')),
-        #(T('Policy Statement'), False, URL('default', 'DetallePolitica')),
+        (T('Impact Level'), False, URL('default', 'impact_level')),
+        (T('Probability Level'), False, URL('default', 'probability_level')),
     ]),
 
     (T('Organization Context'), False, '#', [    
         (T('Department'), False, URL('default', 'department')),
         (T('Objective Type'), False, URL('default', 'objective_type')),
+        (T('Company'), False, URL('default', 'company')),
+        (T('Company Objetive'), False, URL('default', 'company_objective')),
     ]),
 
     (T('Asset'), False, '#', [    
