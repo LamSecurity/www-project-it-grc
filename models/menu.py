@@ -26,6 +26,7 @@ response.menu = [
 
     (T('Audit & Control'), False, '#', [    
         (T('Maturity Level'), False, URL('default', 'maturity_level')),
+        (T('Benchmark'), False, URL('default', 'benchmark')),
     ]),
 
     (T('Project'), False, '#', [    

@@ -331,6 +331,32 @@ def maturity_level():
     else:
         redirect(URL('default','index'))
 
+#------------------------
+# Benchmark
+#------------------------
+@auth.requires_login()
+def benchmark():
+    db.benchmark.id.readable=False
+    db.benchmark.risk_manager_approval.writable=False
+    db.benchmark.risk_analyst_approval.writable=False
+    db.benchmark.risk_manager_log.writable=False
+    db.benchmark.risk_analyst_log.writable=False
+    db.benchmark.create_date.writable=False
+    db.benchmark.write_date.writable=False
+    table_name = 'benchmark'
+    fields = (db.benchmark.bench_version, db.benchmark.description, db.benchmark.bench_file)
+    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
+    if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.benchmark, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
+    elif auth.has_membership(role='riskAnalyst'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.benchmark, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
+        query = db.benchmark.risk_manager_approval=='T'
+        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
+    else:
+        redirect(URL('default','index'))
 
 #---------------------------------------------------------------------------------------------------
 # To set basic configurations in GRC
@@ -352,128 +378,140 @@ def _record_update(table_name):
 
     if request.args(0) == 'approve':
         if table_name=='risk_classification':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='risk_treatment':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='department':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.department.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.department.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.department.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.department.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='objective_type':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='process_type':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.process_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.process_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.process_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.process_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='system_type':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.system_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.system_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.system_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.system_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='process':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.process.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.process.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.process.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.process.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='maturity_level':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='company':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.company.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.company.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.company.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.company.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='impact_level':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='probability_level':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='company_objective':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+        if table_name=='benchmark':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+
         _log_update( request.args[len(request.args)-1], table_name, '0', str(request.args(0))    )
 
     if request.args(0) == 'not_approve':
         if table_name=='risk_classification':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.risk_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='risk_treatment':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.risk_treatment.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='department':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.department.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.department.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.department.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.department.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='objective_type':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.objective_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='process_type':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.process_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.process_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.process_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.process_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='system_type':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.system_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.system_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.system_type.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.system_type.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='process':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.process.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.process.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.process.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.process.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='maturity_level':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='company':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.company.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.company.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.company.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.company.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='impact_level':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.impact_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='probability_level':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.probability_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='company_objective':
-                if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                    db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-                elif (auth.has_membership(role='riskAnalyst')):
-                    db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+        if table_name=='benchmark':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+
         _log_update( request.args[len(request.args)-1], table_name, '0', str(request.args(0))    )
         
     if request.args(0) == 'edit':
@@ -525,6 +563,11 @@ def _record_update(table_name):
             db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
             db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
             db(db.company_objective.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
+        if table_name=='benchmark':
+            db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            db(db.benchmark.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
+
         _log_update( request.args[len(request.args)-1], table_name, '0', str(request.args(0))    )
 
 
@@ -622,7 +665,11 @@ def _log_update(*args):
             db(db.company_objective.id==record_id).update(risk_manager_log=signature)
         elif (auth.has_membership(role='riskAnalyst')):
             db(db.company_objective.id==request.args(0)).update(risk_analyst_log=signature)    
-
+    if table_name == 'benchmark':
+        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+            db(db.benchmark.id==record_id).update(risk_manager_log=signature)
+        elif (auth.has_membership(role='riskAnalyst')):
+            db(db.benchmark.id==request.args(0)).update(risk_analyst_log=signature)
 
     '''
     if request.args(1) == 'risk_treatment':

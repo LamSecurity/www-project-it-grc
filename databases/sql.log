@@ -1771,3 +1771,88 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-09-12T21:43:21.495972
+CREATE TABLE "benchmark"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "bench_version" CHAR(512),
+    "description" TEXT,
+    "bench_file" CHAR(512),
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

@@ -124,10 +124,7 @@ if configuration.get('scheduler.enabled'):
     from gluon.scheduler import Scheduler
     scheduler = Scheduler(db, heartbeat=configuration.get('scheduler.heartbeat'))
 
-# -------------------------------------------------------------------------
-# after defining tables, uncomment below to enable auditing
-# -------------------------------------------------------------------------
-# auth.enable_record_versioning(db)
+#--------------------------------------------------------------------------
 
 db.define_table('risk_classification',
     Field('name', 'string', label=T('Name'), unique=True),
@@ -287,6 +284,44 @@ db.define_table('company_objective',
     Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
     format=lambda r: '%s' % (r.name)
     )
+
+db.define_table('benchmark',
+    Field('bench_version', 'string', label=T('Version'), unique=True),
+    Field('description', 'text', label=T('Description')),
+    Field('bench_file', 'upload', label=T('File')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.name)
+    )
+
+db.define_table('control_catalog',
+    Field('name', 'string', label=T('Name'), unique=True),
+    Field('description', 'text', label=T('Description')),
+    Field('benchmark_id', 'reference benchmark', label=T('Benchmark')),
+    Field('implementation_guide', 'text', label=T('Implementation Guide')),
+    Field('audit_guide', 'text', label=T('Audit Guide')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.name)
+    )
+
+
+
+
+
+
+
+
+
+
 
 db.define_table('grc_settings',
     Field('grc_language', 'string', label=T('Language')),

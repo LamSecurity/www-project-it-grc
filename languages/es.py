@@ -90,6 +90,7 @@
 'Authentication failed at main DB!': '¡La autenticación ha fallado en la BDD principal!',
 'Available Databases and Tables': 'Bases de datos y tablas disponibles',
 'Back': 'Atrás',
+'Benchmark': 'Benchmark',
 'Buy this book': 'Compra este libro',
 "Buy web2py's book": 'Compra el libro de web2py',
 'Cache': 'Caché',
