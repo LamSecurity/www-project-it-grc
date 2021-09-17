@@ -1856,3 +1856,302 @@ success!
 success!
 success!
 success!
+timestamp: 2021-09-14T17:58:48.880335
+ALTER TABLE "benchmark" ADD "name" CHAR(512) UNIQUE;
+timestamp: 2021-09-14T18:00:57.650451
+ALTER TABLE "benchmark" ADD "name" CHAR(512);
+success!
+timestamp: 2021-09-14T18:00:57.739951
+CREATE TABLE "control_catalog"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "benchmark_id" INTEGER REFERENCES "benchmark" ("id") ON DELETE CASCADE  ,
+    "implementation_guide" TEXT,
+    "audit_guide" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-09-14T20:06:43.755602
+CREATE TABLE "bench_control_objective"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "benchmark_id" INTEGER REFERENCES "benchmark" ("id") ON DELETE CASCADE  NOT NULL ,
+    "control_number" CHAR(512),
+    "name" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-09-17T13:59:08.998727
+CREATE TABLE "risk_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "impact_level_id" INTEGER REFERENCES "impact_level" ("id") ON DELETE CASCADE  ,
+    "probability_level_id" INTEGER REFERENCES "probability_level" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "r_level" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

@@ -9,6 +9,7 @@ response.menu = [
         (T('Risk Treatment'), False, URL('default', 'risk_treatment')),
         (T('Impact Level'), False, URL('default', 'impact_level')),
         (T('Probability Level'), False, URL('default', 'probability_level')),
+        (T('Risk Level'), False, URL('default', 'risk_level')),
     ]),
 
     (T('Organization Context'), False, '#', [    
@@ -27,6 +28,7 @@ response.menu = [
     (T('Audit & Control'), False, '#', [    
         (T('Maturity Level'), False, URL('default', 'maturity_level')),
         (T('Benchmark'), False, URL('default', 'benchmark')),
+        (T('Benchmark Control Objective'), False, URL('default', 'bench_control_objective')),
     ]),
 
     (T('Project'), False, '#', [    

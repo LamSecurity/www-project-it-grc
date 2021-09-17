@@ -272,6 +272,21 @@ db.define_table('probability_level',
     format=lambda r: '%s' % (r.name)
     )
 
+db.define_table('risk_level',
+    Field('impact_level_id', 'reference impact_level', label=T('Impact Level')),
+    Field('probability_level_id', 'reference probability_level', label=T('Probability Level')),
+    Field('name', 'string', label=T('Name')),
+    Field('r_level', 'string', label=T('Risk Level')),
+    Field('description', 'text', label=T('Description')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.name)
+    )
+
 db.define_table('company_objective',
     Field('name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
@@ -286,7 +301,7 @@ db.define_table('company_objective',
     )
 
 db.define_table('benchmark',
-    Field('bench_version', 'string', label=T('Version'), unique=True),
+    Field('name', 'string', label=T('Version'), ),
     Field('description', 'text', label=T('Description')),
     Field('bench_file', 'upload', label=T('File')),
     Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
@@ -298,20 +313,38 @@ db.define_table('benchmark',
     format=lambda r: '%s' % (r.name)
     )
 
-db.define_table('control_catalog',
-    Field('name', 'string', label=T('Name'), unique=True),
+db.define_table('bench_control_objective',
+    Field('benchmark_id','reference benchmark', label=T('Benchmark')),
+    Field('control_number', 'string', label=T('ID')),
+    Field('name', 'string', label=T('Control Objective')),
     Field('description', 'text', label=T('Description')),
-    Field('benchmark_id', 'reference benchmark', label=T('Benchmark')),
-    Field('implementation_guide', 'text', label=T('Implementation Guide')),
-    Field('audit_guide', 'text', label=T('Audit Guide')),
     Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
     Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
     Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
     Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
     Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
-    format=lambda r: '%s' % (r.name)
+    format=lambda r: '%s %s %s %s %s' % (r.benchmark_id.name, '|', r.control_number, '|', r.name)
     )
+
+
+
+
+
+#db.define_table('control_catalog',
+#    Field('name', 'string', label=T('Name'), unique=True),
+#    Field('description', 'text', label=T('Description')),
+#    Field('benchmark_id', 'reference benchmark', label=T('Benchmark')),
+#    Field('implementation_guide', 'text', label=T('Implementation Guide')),
+#    Field('audit_guide', 'text', label=T('Audit Guide')),
+#    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+#    Field('write_date', 'datetime', label=T('Write Date')),
+#    Field('risk_analyst_approval', 'boolean', label=T('Risk Aanalyst (Approval)'), default='F'),
+#    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+#    Field('risk_analyst_log', 'string', label=T('Risk Aanalyst (LOG)')),
+#    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+#    format=lambda r: '%s' % (r.name)
+#    )
 
 
 
@@ -328,13 +361,6 @@ db.define_table('grc_settings',
     Field('company_name', 'string', label=T('Company Name')),
     )
 db.grc_settings.grc_language.requires = IS_IN_SET(['English', 'Spanish'])
-
-
-
-
-
-
-
 
 #db.TipoTratamientoRiesgo.Color.requires= IS_IN_SET(['Rosa (Pink)', 'Purpura (Purple)', 'Amarillo (Yellow)', 'Azul (Blue)', 'Naranja (Orange)', 'Gris (Gray)', 'Rojo Indio (Indian Red)', 'Salmon (Salmon)', 'Salmon Oscuro (Dark Salmon)'])
 #db.TipoTratamientoRiesgo.Nombre.requires=IS_NOT_IN_DB(db, db.TipoTratamientoRiesgo.Nombre)

@@ -2,8 +2,14 @@
 
 <h4>{{=T('GRC Settings')}}</h4>
 
+{{if request.vars.msg:}}
+<div class="{{=request.vars.m_class}}">
+{{=T(request.vars.msg)}}
+</div>
+{{else:}}
 <div class="alert alert-warning">
     {{=T('Warning: Load Demo Data modify current records, it is recomended to use only at the initial configuration.')}}
 </div>
+{{pass}}
 
 {{=form}}
