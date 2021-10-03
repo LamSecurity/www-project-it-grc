@@ -2155,3 +2155,656 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-09-20T22:07:58.844743
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2021-09-20T22:08:51.653320
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2021-09-20T22:09:03.606730
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:03.698759
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2021-09-20T22:09:03.806702
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2021-09-20T22:09:03.886085
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2021-09-20T22:09:03.973717
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2021-09-20T22:09:04.074139
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2021-09-20T22:09:04.174770
+CREATE TABLE "risk_classification"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:04.287572
+CREATE TABLE "risk_treatment"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:04.394403
+CREATE TABLE "department"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "responsible" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:04.520504
+CREATE TABLE "process_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:04.633944
+CREATE TABLE "system_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:04.750421
+CREATE TABLE "maturity_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "m_level" INTEGER UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:04.906708
+CREATE TABLE "process"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "p_owner" CHAR(512),
+    "p_file" CHAR(512),
+    "process_type_id" INTEGER REFERENCES "process_type" ("id") ON DELETE CASCADE  ,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.030687
+CREATE TABLE "objective_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.154239
+CREATE TABLE "company"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "mision" TEXT,
+    "vision" TEXT,
+    "c_value" TEXT,
+    "security_requirement" TEXT,
+    "framework_used" TEXT,
+    "product_service" TEXT,
+    "c_file" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.301814
+CREATE TABLE "impact_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "i_level" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+timestamp: 2021-09-20T22:09:05.331594
+CREATE TABLE "impact_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "i_level" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.363445
+CREATE TABLE "probability_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "p_level" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.413055
+CREATE TABLE "risk_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "impact_level_id" INTEGER REFERENCES "impact_level" ("id") ON DELETE CASCADE  ,
+    "probability_level_id" INTEGER REFERENCES "probability_level" ("id") ON DELETE CASCADE  ,
+    "grc_name" CHAR(512),
+    "r_level" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.461506
+CREATE TABLE "company_objective"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "objective_type_id" INTEGER REFERENCES "objective_type" ("id") ON DELETE CASCADE  ,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.514191
+CREATE TABLE "benchmark"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512),
+    "description" TEXT,
+    "bench_file" CHAR(512),
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.599969
+CREATE TABLE "bench_control_objective"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "benchmark_id" INTEGER REFERENCES "benchmark" ("id") ON DELETE CASCADE  ,
+    "control_number" CHAR(512),
+    "grc_name" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-20T22:09:05.659686
+CREATE TABLE "grc_settings"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_language" CHAR(512),
+    "grc_name" CHAR(512)
+);
+success!
+timestamp: 2021-09-21T00:02:57.153124
+CREATE TABLE "strategic_risk_analysis"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "benchmark_id" INTEGER REFERENCES "benchmark" ("id") ON DELETE CASCADE  ,
+    "control_number" CHAR(512),
+    "grc_name" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-21T00:21:56.457859
+ALTER TABLE "strategic_risk_analysis" ADD "r_date" DATE;
+timestamp: 2021-09-21T00:21:56.658087
+ALTER TABLE "strategic_risk_analysis" ADD "r_owner" CHAR(512);
+timestamp: 2021-09-21T00:21:56.690900
+ALTER TABLE "strategic_risk_analysis" ADD "evidence" CHAR(512);
+timestamp: 2021-09-21T00:21:56.788198
+ALTER TABLE "strategic_risk_analysis" ADD "consequence" TEXT;
+timestamp: 2021-09-21T00:21:56.846457
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:22:57.011186
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:23:56.731911
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:24:56.847120
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:25:57.767529
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:26:56.890269
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:27:56.859846
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:28:56.863138
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:29:56.899553
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:30:56.968247
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:31:57.076777
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:32:56.983432
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:33:56.793031
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:34:58.285878
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:35:56.765081
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:36:33.971871
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:37:39.403070
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:38:18.215952
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512) NOT NULL;
+timestamp: 2021-09-21T00:39:24.978204
+ALTER TABLE "strategic_risk_analysis" ADD "r_level" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2021-09-22T22:47:33.295277
+CREATE TABLE "risk_analysis_classification"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "strategic_risk_analysis_id" INTEGER REFERENCES "strategic_risk_analysis" ("id") ON DELETE CASCADE  NOT NULL ,
+    "risk_classification_id" INTEGER REFERENCES "risk_classification" ("id") ON DELETE CASCADE  NOT NULL ,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2021-09-22T22:47:33.348191
+CREATE TABLE "risk_analysis_objective"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "strategic_risk_analysis_id" INTEGER REFERENCES "strategic_risk_analysis" ("id") ON DELETE CASCADE  NOT NULL ,
+    "company_objective_id" INTEGER REFERENCES "company_objective" ("id") ON DELETE CASCADE  NOT NULL ,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

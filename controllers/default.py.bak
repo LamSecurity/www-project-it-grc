@@ -98,17 +98,15 @@ def impact_level():
     db.impact_level.risk_analyst_log.writable=False
     db.impact_level.create_date.writable=False
     db.impact_level.write_date.writable=False
-    db.impact_level.grc_name.writable=False
-    db.impact_level.i_level.writable=False
     table_name = 'impact_level'
     fields = (db.impact_level.grc_name, db.impact_level.description)
     links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
     if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
         _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.impact_level, fields=fields, links=links, searchable=True, create=False, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+        return dict(form=SQLFORM.grid(db.impact_level, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
     elif auth.has_membership(role='riskAnalyst'):
         _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.impact_level, fields=fields, links=links, searchable=True, create=False, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+        return dict(form=SQLFORM.grid(db.impact_level, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
     elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
         query = db.impact_level.risk_manager_approval=='T'
         return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
@@ -124,17 +122,15 @@ def probability_level():
     db.probability_level.risk_analyst_log.writable=False
     db.probability_level.create_date.writable=False
     db.probability_level.write_date.writable=False
-    db.probability_level.grc_name.writable=False
-    db.probability_level.p_level.writable=False
     table_name = 'probability_level'
     fields = (db.probability_level.grc_name, db.probability_level.description)
     links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
     if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
         _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.probability_level, fields=fields, links=links, searchable=True, create=False, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+        return dict(form=SQLFORM.grid(db.probability_level, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
     elif auth.has_membership(role='riskAnalyst'):
         _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.probability_level, fields=fields, links=links, searchable=True, create=False, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+        return dict(form=SQLFORM.grid(db.probability_level, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
     elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
         query = db.probability_level.risk_manager_approval=='T'
         return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
@@ -418,78 +414,6 @@ def bench_control_objective():
     else:
         redirect(URL('default','index'))
 
-@auth.requires_login()
-def strategic_risk_analysis():
-    db.strategic_risk_analysis.id.readable=False
-    db.strategic_risk_analysis.risk_manager_approval.writable=False
-    db.strategic_risk_analysis.risk_analyst_approval.writable=False
-    db.strategic_risk_analysis.risk_manager_log.writable=False
-    db.strategic_risk_analysis.risk_analyst_log.writable=False
-    db.strategic_risk_analysis.create_date.writable=False
-    db.strategic_risk_analysis.write_date.writable=False
-    table_name = 'strategic_risk_analysis'
-    fields = (db.strategic_risk_analysis.description, db.strategic_risk_analysis.r_date, db.strategic_risk_analysis.r_level)
-    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
-    if auth.has_membership(role='admin') or auth.has_membership(role='auditManager'):
-        _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.strategic_risk_analysis, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
-    elif auth.has_membership(role='auditAnalyst'):
-        _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.strategic_risk_analysis, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
-    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='riskManager') or auth.has_membership(role='riskAnalyst') or auth.has_membership(role='guest'):
-        query = db.strategic_risk_analysis.risk_manager_approval=='T'
-        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
-    else:
-        redirect(URL('default','index'))
-
-@auth.requires_login()
-def risk_analysis_classification():
-    db.risk_analysis_classification.id.readable=False
-    db.risk_analysis_classification.risk_manager_approval.writable=False
-    db.risk_analysis_classification.risk_analyst_approval.writable=False
-    db.risk_analysis_classification.risk_manager_log.writable=False
-    db.risk_analysis_classification.risk_analyst_log.writable=False
-    db.risk_analysis_classification.create_date.writable=False
-    db.risk_analysis_classification.write_date.writable=False
-    table_name = 'risk_analysis_classification'
-    fields = (db.risk_analysis_classification.strategic_risk_analysis_id, db.risk_analysis_classification.risk_classification_id)
-    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
-    if auth.has_membership(role='admin') or auth.has_membership(role='auditManager'):
-        _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.risk_analysis_classification, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
-    elif auth.has_membership(role='auditAnalyst'):
-        _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.risk_analysis_classification, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
-    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='riskManager') or auth.has_membership(role='riskAnalyst') or auth.has_membership(role='guest'):
-        query = db.risk_analysis_classification.risk_manager_approval=='T'
-        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
-    else:
-        redirect(URL('default','index'))
-
-@auth.requires_login()
-def risk_analysis_objective():
-    db.risk_analysis_objective.id.readable=False
-    db.risk_analysis_objective.risk_manager_approval.writable=False
-    db.risk_analysis_objective.risk_analyst_approval.writable=False
-    db.risk_analysis_objective.risk_manager_log.writable=False
-    db.risk_analysis_objective.risk_analyst_log.writable=False
-    db.risk_analysis_objective.create_date.writable=False
-    db.risk_analysis_objective.write_date.writable=False
-    table_name = 'risk_analysis_objective'
-    fields = (db.risk_analysis_objective.strategic_risk_analysis_id, db.risk_analysis_objective.company_objective_id)
-    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
-    if auth.has_membership(role='admin') or auth.has_membership(role='auditManager'):
-        _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.risk_analysis_objective, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
-    elif auth.has_membership(role='auditAnalyst'):
-        _record_update(table_name)
-        return dict(form=SQLFORM.grid(db.risk_analysis_objective, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
-    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='riskManager') or auth.has_membership(role='riskAnalyst') or auth.has_membership(role='guest'):
-        query = db.risk_analysis_objective.risk_manager_approval=='T'
-        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
-    else:
-        redirect(URL('default','index'))
-
 #---------------------------------------------------------------------------------------------------
 # To set basic configurations in GRC
 # Load Demo Data modify current records, it is recomended to use only at the initial configuration 
@@ -584,21 +508,6 @@ def _record_update(table_name):
                 db(db.bench_control_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
             elif (auth.has_membership(role='riskAnalyst')):
                 db(db.bench_control_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
-        if table_name=='strategic_risk_analysis':
-            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                db(db.strategic_risk_analysis.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-            elif (auth.has_membership(role='riskAnalyst')):
-                db(db.strategic_risk_analysis.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
-        if table_name=='risk_analysis_classification':
-            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                db(db.risk_analysis_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-            elif (auth.has_membership(role='riskAnalyst')):
-                db(db.risk_analysis_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
-        if table_name=='risk_analysis_objective':
-            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
-            elif (auth.has_membership(role='riskAnalyst')):
-                db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
 
         _log_update( request.args[len(request.args)-1], table_name, '0', str(request.args(0))    )
 
@@ -678,21 +587,6 @@ def _record_update(table_name):
                 db(db.bench_control_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
             elif (auth.has_membership(role='riskAnalyst')):
                 db(db.bench_control_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
-        if table_name=='strategic_risk_analysis':
-            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                db(db.strategic_risk_analysis.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-            elif (auth.has_membership(role='riskAnalyst')):
-                db(db.strategic_risk_analysis.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
-        if table_name=='risk_analysis_classification':
-            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                db(db.risk_analysis_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-            elif (auth.has_membership(role='riskAnalyst')):
-                db(db.risk_analysis_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
-        if table_name=='risk_analysis_objective':
-            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-                db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-            elif (auth.has_membership(role='riskAnalyst')):
-                db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
 
         _log_update( request.args[len(request.args)-1], table_name, '0', str(request.args(0))    )
         
@@ -757,18 +651,6 @@ def _record_update(table_name):
             db(db.bench_control_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
             db(db.bench_control_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
             db(db.bench_control_objective.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
-        if table_name=='strategic_risk_analysis':
-            db(db.strategic_risk_analysis.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
-            db(db.strategic_risk_analysis.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-            db(db.strategic_risk_analysis.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
-        if table_name=='risk_analysis_classification':
-            db(db.risk_analysis_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
-            db(db.risk_analysis_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-            db(db.risk_analysis_classification.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
-        if table_name=='risk_analysis_objective':
-            db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
-            db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
-            db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
 
         _log_update( request.args[len(request.args)-1], table_name, '0', str(request.args(0))    )
 
@@ -882,21 +764,6 @@ def _log_update(*args):
             db(db.bench_control_objective.id==record_id).update(risk_manager_log=signature)
         elif (auth.has_membership(role='riskAnalyst')):
             db(db.bench_control_objective.id==request.args(0)).update(risk_analyst_log=signature)
-    if table_name == 'strategic_risk_analysis':
-        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-            db(db.strategic_risk_analysis.id==record_id).update(risk_manager_log=signature)
-        elif (auth.has_membership(role='riskAnalyst')):
-            db(db.strategic_risk_analysis.id==request.args(0)).update(risk_analyst_log=signature)
-    if table_name == 'risk_analysis_classification':
-        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-            db(db.risk_analysis_classification.id==record_id).update(risk_manager_log=signature)
-        elif (auth.has_membership(role='riskAnalyst')):
-            db(db.risk_analysis_classification.id==request.args(0)).update(risk_analyst_log=signature)
-    if table_name == 'risk_analysis_objective':
-        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
-            db(db.risk_analysis_objective.id==record_id).update(risk_manager_log=signature)
-        elif (auth.has_membership(role='riskAnalyst')):
-            db(db.risk_analysis_objective.id==request.args(0)).update(risk_analyst_log=signature)
 
     '''
     if request.args(1) == 'risk_treatment':
