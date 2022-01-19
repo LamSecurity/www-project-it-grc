@@ -23,10 +23,11 @@ response.menu = [
         (T('Process Type'), False, URL('default', 'process_type')),
         (T('System Type'), False, URL('default', 'system_type')),
         (T('Process'), False, URL('default', 'process')),
+        (T('System'), False, URL('default', 'system_asset')),
     ]),
 
     (T('Risk'), False, '#', [    
-        (T('Strategic Risk Analysis'), False, URL('default', 'strategic_risk_analysis')),
+        (T('Risk Analysis'), False, URL('default', 'strategic_risk_analysis')),
         (T('Risk Analysis & Classification'), False, URL('default', 'risk_analysis_classification')),
         (T('Risk Analysis & Objective'), False, URL('default', 'risk_analysis_objective')),
     ]),
@@ -49,4 +50,3 @@ response.menu = [
         (T('Settings'), False, URL('default', 'grc_settings')),
     ]),
 ]
-

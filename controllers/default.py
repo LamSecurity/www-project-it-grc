@@ -10,7 +10,12 @@ def index():
     #db.auth_group.update_or_insert((db.auth_group.id==1),id=1, role="admin", description="admin")
     #db.auth_membership.update_or_insert((db.auth_membership.id==1),id=1, user_id=1, group_id=1)
     #-----------------------------------------------------------------------------------
-    return dict()
+    import random
+    risk_array = {}
+    for i in range(0,25):
+        for j in range(0,25):
+            risk_array[i,j]=random.randint(0, 20)
+    return dict(risk_array=risk_array)
 
 def user():
     """
@@ -343,6 +348,31 @@ def process():
     else:
         redirect(URL('default','index'))
 
+@auth.requires_login()
+def system_asset():
+    db.system_asset.id.readable=False
+    db.system_asset.risk_manager_approval.writable=False
+    db.system_asset.risk_analyst_approval.writable=False
+    db.system_asset.risk_manager_log.writable=False
+    db.system_asset.risk_analyst_log.writable=False
+    db.system_asset.create_date.writable=False
+    db.system_asset.write_date.writable=False
+    table_name = 'system_asset'
+    fields = (db.system_asset.grc_name, db.system_asset.description)
+    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
+    if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.system_asset, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
+    elif auth.has_membership(role='riskAnalyst'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.system_asset, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
+        query = db.system_asset.risk_manager_approval=='T'
+        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
+    else:
+        redirect(URL('default','index'))
+
+        
 #------------------------
 #Audit & Control
 #------------------------
@@ -496,7 +526,8 @@ def risk_analysis_objective():
 #---------------------------------------------------------------------------------------------------
 @auth.requires_login()
 def grc_settings():
-    if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+    #if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+    if auth.has_membership(role='admin'):
         links = [lambda row: A(T('Load Demo Data'),_class='button btn btn-warning',_href=URL("grc_demo_data","_load_demo_data")) ]
         return dict(form=SQLFORM.grid(db.grc_settings, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
     else:
@@ -544,6 +575,11 @@ def _record_update(table_name):
                 db(db.process.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
             elif (auth.has_membership(role='riskAnalyst')):
                 db(db.process.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+        if table_name=='system_asset':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.system_asset.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.system_asset.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='maturity_level':
             if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
                 db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
@@ -638,6 +674,11 @@ def _record_update(table_name):
                 db(db.process.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
             elif (auth.has_membership(role='riskAnalyst')):
                 db(db.process.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+        if table_name=='system_asset':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.system_asset.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.system_asset.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='maturity_level':
             if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
                 db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
@@ -721,6 +762,10 @@ def _record_update(table_name):
             db(db.process.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
             db(db.process.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
             db(db.process.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
+        if table_name=='system_asset':
+            db(db.system_asset.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            db(db.system_asset.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            db(db.system_asset.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
         if table_name=='maturity_level':
             db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
             db(db.maturity_level.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
@@ -842,6 +887,11 @@ def _log_update(*args):
             db(db.process.id==record_id).update(risk_manager_log=signature)
         elif (auth.has_membership(role='riskAnalyst')):
             db(db.process.id==request.args(0)).update(risk_analyst_log=signature)
+    if table_name == 'system_asset':
+        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+            db(db.system_asset.id==record_id).update(risk_manager_log=signature)
+        elif (auth.has_membership(role='riskAnalyst')):
+            db(db.system_asset.id==request.args(0)).update(risk_analyst_log=signature)
     if table_name == 'maturity_level':
         if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
             db(db.maturity_level.id==record_id).update(risk_manager_log=signature)

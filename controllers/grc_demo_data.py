@@ -92,6 +92,15 @@ def _load_demo_data():
     db.process.update_or_insert((db.process.id==5), id=5, grc_name="Process 3 (Proceso 3)", description="", p_owner="processOwner", process_type_id=4, create_date= datetime.datetime.now(), risk_manager_approval='T')
     db.process.update_or_insert((db.process.id==6), id=6, grc_name="Process 4 (Proceso 4)", description="", p_owner="processOwner", process_type_id=4, create_date= datetime.datetime.now(), risk_manager_approval='T')
     #------------------
+    # System
+    #------------------
+    db.system_asset.update_or_insert((db.system_asset.id==1), id=1, grc_name="NA", description="NA", s_owner="NA", system_type_id=1, create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.system_asset.update_or_insert((db.system_asset.id==2), id=2, grc_name="Web app", description="", s_owner="itAdmin", system_type_id=2, create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.system_asset.update_or_insert((db.system_asset.id==3), id=3, grc_name="ERP", description="", s_owner="itAdmin", system_type_id=2, create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.system_asset.update_or_insert((db.system_asset.id==4), id=4, grc_name="CRM", description="", s_owner="itAdmin", system_type_id=3, create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.system_asset.update_or_insert((db.system_asset.id==5), id=5, grc_name="PoS", description="", s_owner="itAdmin", system_type_id=4, create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.system_asset.update_or_insert((db.system_asset.id==6), id=6, grc_name="Mobile app", description="", s_owner="itAdmin", system_type_id=4, create_date= datetime.datetime.now(), risk_manager_approval='T')
+    #------------------
     # Maturity Level
     #------------------
     db.maturity_level.update_or_insert((db.maturity_level.id==1), id=1, grc_name="Incomplete (Imcompleto)",   m_level=0, description="The process is not implemented or fails to achieve its process purpose. At this level, there is little or no evidence of any systematic achievement of the process purpose. (El proceso no se implementa o no logra su propósito. En este nivel, hay poca o ninguna evidencia de algún logro sistemático del propósito del proceso.)", create_date= datetime.datetime.now(), risk_manager_approval='T')
@@ -154,14 +163,14 @@ def _load_demo_data():
     db.risk_level.update_or_insert((db.risk_level.id==22),id=22, impact_level_id=5,probability_level_id=4,r_level=4,grc_name="Critical (Critico )", description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
     db.risk_level.update_or_insert((db.risk_level.id==23),id=23, impact_level_id=4,probability_level_id=5,r_level=4,grc_name="Critical (Critico )", description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
     db.risk_level.update_or_insert((db.risk_level.id==24),id=24, impact_level_id=5,probability_level_id=5,r_level=4,grc_name="Critical (Critico )", description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
-    db.risk_level.update_or_insert((db.risk_level.id==25),id=25, impact_level_id=3,probability_level_id=3,r_level=3,grc_name="High (Alto)", description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.risk_level.update_or_insert((db.risk_level.id==25),id=25, impact_level_id=3,probability_level_id=3,r_level=3,grc_name="High (Alto)",         description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
     #-------------------
     # Company Objective
     #-------------------
-    db.company_objective.update_or_insert((db.company_objective.id==1), id=1, grc_name="Compliance ISO, PCI, NIST (Cumplir con leyes y regulaciones LFPDPPP, SOX, NOM35, PCI, ISO)", objective_type=1, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
-    db.company_objective.update_or_insert((db.company_objective.id==2), id=2, grc_name="PII protection (Proteger datos personales de clientes)",                                     objective_type=2, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
-    db.company_objective.update_or_insert((db.company_objective.id==3), id=3, grc_name="Internal security requirements (Cumplir con los requerimientos de la Dirección General)",    objective_type=3, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
-    db.company_objective.update_or_insert((db.company_objective.id==4), id=4, grc_name="99% IT infrastructure availability (Asegurar la disponibilidad de los sistemas al 99.99%)",  objective_type=4, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.company_objective.update_or_insert((db.company_objective.id==1), id=1, grc_name="Compliance ISO, PCI, NIST (Cumplir con leyes y regulaciones LFPDPPP, SOX, NOM35, PCI, ISO)", objective_type_id=1, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.company_objective.update_or_insert((db.company_objective.id==2), id=2, grc_name="PII protection (Proteger datos personales de clientes)",                                     objective_type_id=2, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.company_objective.update_or_insert((db.company_objective.id==3), id=3, grc_name="Internal security requirements (Cumplir con los requerimientos de la Dirección General)",    objective_type_id=3, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
+    db.company_objective.update_or_insert((db.company_objective.id==4), id=4, grc_name="99% IT infrastructure availability (Asegurar la disponibilidad de los sistemas al 99.99%)",  objective_type_id=4, description="", create_date= datetime.datetime.now(), risk_manager_approval='T')
     #-------------------
     # Benchmark
     #-------------------

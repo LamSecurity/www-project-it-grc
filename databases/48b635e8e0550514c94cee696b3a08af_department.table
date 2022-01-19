@@ -135,14 +135,14 @@ p41
 sg8
 I00
 sg9
-I32768
+I512
 sg10
-S'TEXT'
+S'CHAR(512)'
 p42
 sg12
 I00
 sg13
-g20
+g37
 ssS'risk_analyst_log'
 p43
 (dp44

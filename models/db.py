@@ -103,6 +103,13 @@ auth.settings.registration_requires_verification = False
 auth.settings.registration_requires_approval = False
 auth.settings.reset_password_requires_verification = True
 
+auth.settings.actions_disabled.append('register')
+auth.settings.actions_disabled.append('request_reset_password')
+auth.settings.actions_disabled.append('retrieve_username')
+auth.settings.actions_disabled.append('profile')
+auth.settings.actions_disabled.append('change_password')
+auth.settings.actions_disabled.append('retrieve_password')
+
 # -------------------------------------------------------------------------  
 # read more at http://dev.w3.org/html5/markup/meta.name.html               
 # -------------------------------------------------------------------------
@@ -153,7 +160,7 @@ db.define_table('risk_treatment',
 db.define_table('department',
     Field('grc_name', 'string', label=T('Name'), unique=True),
     Field('description', 'text', label=T('Description')),
-    Field('responsible', 'text', label=T('Responsible')),
+    Field('responsible', 'string', label=T('Responsible')),
     Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
     Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Analyst (Approval)'), default='F'),
@@ -236,7 +243,7 @@ db.define_table('company',
     Field('security_requirement', 'text', label=T('Security Requirement')),
     Field('framework_used', 'text', label=T('Framework Used')),
     Field('product_service', 'text', label=T('Product/Service')),
-    Field('c_file', 'text', label=T('File')),
+    Field('c_file', 'upload', label=T('File')),
     Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
     Field('write_date', 'datetime', label=T('Write Date')),
     Field('risk_analyst_approval', 'boolean', label=T('Risk Analyst (Approval)'), default='F'),
@@ -370,6 +377,20 @@ db.define_table('risk_analysis_objective',
     format=lambda r: '%s %s %s %s %s' % (r.id, '|', r.strategic_risk_analysis_id.description, '|', r.company_objective_id.grc_name)
     )
 
+db.define_table('system_asset',
+    Field('grc_name', 'string', label=T('Name'), unique=True),
+    Field('description', 'text', label=T('Description')),
+    Field('s_owner', 'string', label=T('Owner')),
+    Field('s_file', 'upload', label=T('Arquitecture Diagram')),
+    Field('system_type_id', 'reference system_type', label=T('System Type')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Analyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Analyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.grc_name)
+    )
 
 #db.define_table('control_catalog',
 #    Field('grc_name', 'string', label=T('Name'), unique=True),
