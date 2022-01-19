@@ -1,2 +1,10 @@
 {{extend 'layout.html'}}
-{{block header}}
+{{include 'chart/lib_chart.html'}}
+
+<!-- Heat Map -->
+<div class="row row-centered" style="width:100%;">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+    <strong>{{=T('GRCbit®')}}</strong>
+    {{include 'chart/risk_heat_map_chart.html'}}
+  </div>
+</div>
