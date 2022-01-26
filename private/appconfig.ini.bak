@@ -1,9 +1,9 @@
 ; App configuration
 [app]
-name        = Welcome
-author      = Your Name <you@example.com>
-description = a cool new app
-keywords    = web2py, python, framework
+name        = GRC
+author      = Rodolfo Lopez <rlt@grcbit.com>
+description = GRC (Governance, Risk and Compliance Software)
+keywords    = risk, audit, control, governance
 generator   = Web2py Web Framework
 production  = false
 toolbar     = false

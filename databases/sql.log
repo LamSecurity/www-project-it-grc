@@ -3017,3 +3017,475 @@ success!
 success!
 success!
 success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2022-01-19T18:41:52.985942
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-19T18:42:06.636134
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-19T18:42:33.636086
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:09:35.373010
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:10:39.180363
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:11:09.278720
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:15:37.391271
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:16:22.117767
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:16:47.310332
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:16:47.831069
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:16:48.753823
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:16:54.586857
+ALTER TABLE "risk_classification" ADD "grc_name" CHAR(512) UNIQUE;
+timestamp: 2022-01-22T06:17:55.202506
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.249658
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2022-01-22T06:17:55.296793
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2022-01-22T06:17:55.335715
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2022-01-22T06:17:55.375864
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2022-01-22T06:17:55.423567
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2022-01-22T06:17:55.468746
+CREATE TABLE "risk_classification"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.516892
+CREATE TABLE "risk_treatment"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.562011
+CREATE TABLE "department"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "responsible" CHAR(512),
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.603770
+CREATE TABLE "process_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.657699
+CREATE TABLE "system_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.703270
+CREATE TABLE "maturity_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "m_level" INTEGER UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.748475
+CREATE TABLE "process"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "p_owner" CHAR(512),
+    "p_file" CHAR(512),
+    "process_type_id" INTEGER REFERENCES "process_type" ("id") ON DELETE CASCADE  ,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.798214
+CREATE TABLE "objective_type"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.841588
+CREATE TABLE "company"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "mision" TEXT,
+    "vision" TEXT,
+    "c_value" TEXT,
+    "security_requirement" TEXT,
+    "framework_used" TEXT,
+    "product_service" TEXT,
+    "c_file" CHAR(512),
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.888515
+CREATE TABLE "impact_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "i_level" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.932267
+CREATE TABLE "probability_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "p_level" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:55.982643
+CREATE TABLE "risk_level"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "impact_level_id" INTEGER REFERENCES "impact_level" ("id") ON DELETE CASCADE  ,
+    "probability_level_id" INTEGER REFERENCES "probability_level" ("id") ON DELETE CASCADE  ,
+    "grc_name" CHAR(512),
+    "r_level" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.027535
+CREATE TABLE "company_objective"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "objective_type_id" INTEGER REFERENCES "objective_type" ("id") ON DELETE CASCADE  ,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.067748
+CREATE TABLE "benchmark"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512),
+    "description" TEXT,
+    "bench_file" CHAR(512),
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.101308
+CREATE TABLE "bench_control_objective"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "benchmark_id" INTEGER REFERENCES "benchmark" ("id") ON DELETE CASCADE  ,
+    "control_number" CHAR(512),
+    "grc_name" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.167561
+CREATE TABLE "strategic_risk_analysis"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "description" TEXT,
+    "r_date" DATE,
+    "evidence" CHAR(512),
+    "consequence" TEXT,
+    "r_level" CHAR(512),
+    "r_owner" CHAR(512),
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.210104
+CREATE TABLE "risk_analysis_classification"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "strategic_risk_analysis_id" INTEGER REFERENCES "strategic_risk_analysis" ("id") ON DELETE CASCADE  NOT NULL ,
+    "risk_classification_id" INTEGER REFERENCES "risk_classification" ("id") ON DELETE CASCADE  NOT NULL ,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.255916
+CREATE TABLE "risk_analysis_objective"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "strategic_risk_analysis_id" INTEGER REFERENCES "strategic_risk_analysis" ("id") ON DELETE CASCADE  NOT NULL ,
+    "company_objective_id" INTEGER REFERENCES "company_objective" ("id") ON DELETE CASCADE  NOT NULL ,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.325780
+CREATE TABLE "system_asset"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512) UNIQUE,
+    "description" TEXT,
+    "s_owner" CHAR(512),
+    "s_file" CHAR(512),
+    "system_type_id" INTEGER REFERENCES "system_type" ("id") ON DELETE CASCADE  ,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.376539
+CREATE TABLE "compliance_requirement"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512),
+    "grc_version" CHAR(512),
+    "description" TEXT,
+    "compliance_file" CHAR(512),
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.421291
+CREATE TABLE "data_classification"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512),
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.466165
+CREATE TABLE "data_inventory"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_name" CHAR(512),
+    "description" TEXT,
+    "data_classification_id" INTEGER REFERENCES "data_classification" ("id") ON DELETE CASCADE  ,
+    "data_owner" CHAR(512),
+    "data_retention" CHAR(512),
+    "security_requirements" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:17:56.690330
+CREATE TABLE "grc_settings"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "grc_language" CHAR(512),
+    "grc_name" CHAR(512)
+);
+success!
+timestamp: 2022-01-22T06:28:31.058098
+CREATE TABLE "data_inventory_compliance"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "data_inventory_id" INTEGER REFERENCES "data_inventory" ("id") ON DELETE CASCADE  ,
+    "compliance_requirement_id" INTEGER REFERENCES "compliance_requirement" ("id") ON DELETE CASCADE  ,
+    "description" TEXT,
+    "create_date" TIMESTAMP,
+    "write_date" TIMESTAMP,
+    "risk_analyst_approval" CHAR(1),
+    "risk_manager_approval" CHAR(1),
+    "risk_analyst_log" CHAR(512),
+    "risk_manager_log" CHAR(512)
+);
+success!
+timestamp: 2022-01-26T16:17:56.448230
+ALTER TABLE "data_inventory" ADD "retention_time" INTEGER;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

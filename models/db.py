@@ -392,6 +392,61 @@ db.define_table('system_asset',
     format=lambda r: '%s' % (r.grc_name)
     )
 
+db.define_table('compliance_requirement',
+    Field('grc_name', 'string', label=T('Nanme')),
+    Field('grc_version', 'string', label=T('Version')),
+    Field('description', 'text', label=T('Description')),
+    Field('compliance_file', 'upload', label=T('File')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Analyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Analyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s %s %s' % (r.grc_name, ' | ', r.grc_version)
+    )
+
+db.define_table('data_classification',
+    Field('grc_name', 'string', label=T('Name')),
+    Field('description', 'text', label=T('Description')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Analyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Analyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.grc_name)
+    )
+
+db.define_table('data_inventory',
+    Field('grc_name', 'string', label=T('Name')),
+    Field('description', 'text', label=T('Description')),
+    Field('data_classification_id', 'reference data_classification', label=T('Data Classification')),
+    Field('data_owner', 'string', label=T('Data Owner')),
+    Field('retention_time', 'integer', label=T('Retention Time (Years)')),
+    Field('security_requirements', 'text', label=T('    ')),   
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Analyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Analyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.grc_name)
+    )
+
+db.define_table('data_inventory_compliance',
+    Field('data_inventory_id', 'reference data_inventory', label=T('Data Asset')),
+    Field('compliance_requirement_id', 'reference compliance_requirement', label=T('Compliance Requirement')),
+    Field('description', 'text', label=T('Description')),
+    Field('create_date', 'datetime', label=T('Create Date'), default= datetime.datetime.now() ),
+    Field('write_date', 'datetime', label=T('Write Date')),
+    Field('risk_analyst_approval', 'boolean', label=T('Risk Analyst (Approval)'), default='F'),
+    Field('risk_manager_approval', 'boolean', label=T('Risk Manager (Approval)'), default='F'),
+    Field('risk_analyst_log', 'string', label=T('Risk Analyst (LOG)')),
+    Field('risk_manager_log', 'string', label=T('Risk Manager (LOG)')),
+    format=lambda r: '%s' % (r.grc_name)
+    )
+
 #db.define_table('control_catalog',
 #    Field('grc_name', 'string', label=T('Name'), unique=True),
 #    Field('description', 'text', label=T('Description')),

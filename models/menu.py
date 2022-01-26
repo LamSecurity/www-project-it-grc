@@ -17,9 +17,13 @@ response.menu = [
         (T('Objective Type'), False, URL('default', 'objective_type')),
         (T('Company'), False, URL('default', 'company')),
         (T('Company Objetive'), False, URL('default', 'company_objective')),
+        (T('Compliance Requirement'), False, URL('default', 'compliance_requirement')),
     ]),
 
     (T('Asset'), False, '#', [    
+        (T('Data Classification'), False, URL('default', 'data_classification')),
+        (T('Data Inventory'), False, URL('default', 'data_inventory')),
+        (T('Data Inventory & Compliance'), False, URL('default', 'data_inventory_compliance')),
         (T('Process Type'), False, URL('default', 'process_type')),
         (T('System Type'), False, URL('default', 'system_type')),
         (T('Process'), False, URL('default', 'process')),

@@ -273,6 +273,30 @@ def company_objective():
     else:
         redirect(URL('default','index'))
 
+@auth.requires_login()
+def compliance_requirement():
+    db.compliance_requirement.id.readable=False
+    db.compliance_requirement.risk_manager_approval.writable=False
+    db.compliance_requirement.risk_analyst_approval.writable=False
+    db.compliance_requirement.risk_manager_log.writable=False
+    db.compliance_requirement.risk_analyst_log.writable=False
+    db.compliance_requirement.create_date.writable=False
+    db.compliance_requirement.write_date.writable=False
+    table_name = 'compliance_requirement'
+    fields = (db.compliance_requirement.grc_name, db.compliance_requirement.description)
+    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
+    if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.compliance_requirement, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
+    elif auth.has_membership(role='riskAnalyst'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.compliance_requirement, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
+        query = db.compliance_requirement.risk_manager_approval=='T'
+        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
+    else:
+        redirect(URL('default','index'))
+
 #--------------------------------------
 #Assets (IT systems, processes, data)
 #--------------------------------------
@@ -372,7 +396,77 @@ def system_asset():
     else:
         redirect(URL('default','index'))
 
-        
+@auth.requires_login()
+def data_classification():
+    db.data_classification.id.readable=False
+    db.data_classification.risk_manager_approval.writable=False
+    db.data_classification.risk_analyst_approval.writable=False
+    db.data_classification.risk_manager_log.writable=False
+    db.data_classification.risk_analyst_log.writable=False
+    db.data_classification.create_date.writable=False
+    db.data_classification.write_date.writable=False
+    table_name = 'data_classification'
+    fields = (db.data_classification.grc_name, db.data_classification.description)
+    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
+    if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.data_classification, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
+    elif auth.has_membership(role='riskAnalyst'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.data_classification, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
+        query = db.data_classification.risk_manager_approval=='T'
+        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
+    else:
+        redirect(URL('default','index'))
+
+@auth.requires_login()
+def data_inventory():
+    db.data_inventory.id.readable=False
+    db.data_inventory.risk_manager_approval.writable=False
+    db.data_inventory.risk_analyst_approval.writable=False
+    db.data_inventory.risk_manager_log.writable=False
+    db.data_inventory.risk_analyst_log.writable=False
+    db.data_inventory.create_date.writable=False
+    db.data_inventory.write_date.writable=False
+    table_name = 'data_inventory'
+    fields = (db.data_inventory.grc_name, db.data_inventory.description)
+    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
+    if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.data_inventory, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
+    elif auth.has_membership(role='riskAnalyst'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.data_inventory, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
+        query = db.data_inventory.risk_manager_approval=='T'
+        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
+    else:
+        redirect(URL('default','index'))
+
+@auth.requires_login()
+def data_inventory_compliance():
+    db.data_inventory_compliance.id.readable=False
+    db.data_inventory_compliance.risk_manager_approval.writable=False
+    db.data_inventory_compliance.risk_analyst_approval.writable=False
+    db.data_inventory_compliance.risk_manager_log.writable=False
+    db.data_inventory_compliance.risk_analyst_log.writable=False
+    db.data_inventory_compliance.create_date.writable=False
+    db.data_inventory_compliance.write_date.writable=False
+    table_name = 'data_inventory_compliance'
+    fields = (db.data_inventory_compliance.data_inventory_id, db.data_inventory_compliance.compliance_requirement_id, db.data_inventory_compliance.description)
+    links = [lambda row: A(T('Approve'),_class='button btn btn-success',_href=URL("default",request.function, args=['approve', request.function, row.id] )), lambda row: A(T('Not Approved'),_class='button btn btn-primary',  _href=URL("default",request.function, args=['not_approve', request.function, row.id] )  )]
+    if auth.has_membership(role='admin') or auth.has_membership(role='riskManager'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.data_inventory_compliance, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=True, user_signature=True, paginate=10, maxtextlength=500))
+    elif auth.has_membership(role='riskAnalyst'):
+        _record_update(table_name)
+        return dict(form=SQLFORM.grid(db.data_inventory_compliance, fields=fields, links=links, searchable=True, create=True, editable=True, deletable=False, user_signature=True, paginate=10, maxtextlength=500))
+    elif  auth.has_membership(role='riskOwner') or auth.has_membership(role='auditManager') or auth.has_membership(role='auditAnalyst') or auth.has_membership(role='guest'):
+        query = db.data_inventory_compliance.risk_manager_approval=='T'
+        return dict(form=SQLFORM.grid(query=query, fields=fields, searchable=True, create=False, deletable=False,editable=False, user_signature=True, paginate=10, maxtextlength=500))
+    else:
+        redirect(URL('default','index'))
 #------------------------
 #Audit & Control
 #------------------------
@@ -610,6 +704,26 @@ def _record_update(table_name):
                 db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
             elif (auth.has_membership(role='riskAnalyst')):
                 db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+        if table_name=='compliance_requirement':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.compliance_requirement.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.compliance_requirement.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+        if table_name=='data_classification':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.data_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.data_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+        if table_name=='data_inventory':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.data_inventory.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.data_inventory.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
+        if table_name=='data_inventory_compliance':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.data_inventory_compliance.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.data_inventory_compliance.id==request.args[len(request.args)-1]).update(risk_analyst_approval='T')
         if table_name=='benchmark':
             if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
                 db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_manager_approval='T')
@@ -709,6 +823,26 @@ def _record_update(table_name):
                 db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
             elif (auth.has_membership(role='riskAnalyst')):
                 db(db.company_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+        if table_name=='compliance_requirement':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.compliance_requirement.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.compliance_requirement.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+        if table_name=='data_classification':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.data_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.data_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+        if table_name=='data_inventory':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.data_inventory.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.data_inventory.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+        if table_name=='data_inventory_compliance':
+            if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+                db(db.data_inventory_compliance.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            elif (auth.has_membership(role='riskAnalyst')):
+                db(db.data_inventory_compliance.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
         if table_name=='benchmark':
             if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
                 db(db.benchmark.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
@@ -814,6 +948,22 @@ def _record_update(table_name):
             db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
             db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
             db(db.risk_analysis_objective.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
+        if table_name=='compliance_requirement':
+            db(db.compliance_requirement.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            db(db.compliance_requirement.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            db(db.compliance_requirement.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
+        if table_name=='data_classification':
+            db(db.data_classification.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            db(db.data_classification.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            db(db.data_classification.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
+        if table_name=='data_inventory':
+            db(db.data_inventory.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            db(db.data_inventory.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            db(db.data_inventory.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
+        if table_name=='data_inventory_compliance':
+            db(db.data_inventory_compliance.id==request.args[len(request.args)-1]).update(risk_analyst_approval='F')
+            db(db.data_inventory_compliance.id==request.args[len(request.args)-1]).update(risk_manager_approval='F')
+            db(db.data_inventory_compliance.id==request.args[len(request.args)-1]).update(write_date= datetime.datetime.now())
 
         _log_update( request.args[len(request.args)-1], table_name, '0', str(request.args(0))    )
 
@@ -947,6 +1097,26 @@ def _log_update(*args):
             db(db.risk_analysis_objective.id==record_id).update(risk_manager_log=signature)
         elif (auth.has_membership(role='riskAnalyst')):
             db(db.risk_analysis_objective.id==request.args(0)).update(risk_analyst_log=signature)
+    if table_name == 'compliance_requirement':
+        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+            db(db.compliance_requirement.id==record_id).update(risk_manager_log=signature)
+        elif (auth.has_membership(role='riskAnalyst')):
+            db(db.compliance_requirement.id==request.args(0)).update(risk_analyst_log=signature)
+    if table_name == 'data_classification':
+        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+            db(db.data_classification.id==record_id).update(risk_manager_log=signature)
+        elif (auth.has_membership(role='riskAnalyst')):
+            db(db.data_classification.id==request.args(0)).update(risk_analyst_log=signature)
+    if table_name == 'data_inventory':
+        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+            db(db.data_inventory.id==record_id).update(risk_manager_log=signature)
+        elif (auth.has_membership(role='riskAnalyst')):
+            db(db.data_inventory.id==request.args(0)).update(risk_analyst_log=signature)
+    if table_name == 'data_inventory_compliance':
+        if (auth.has_membership(role='riskManager') or auth.has_membership(role='admin')):
+            db(db.data_inventory_compliance.id==record_id).update(risk_manager_log=signature)
+        elif (auth.has_membership(role='riskAnalyst')):
+            db(db.data_inventory_compliance.id==request.args(0)).update(risk_analyst_log=signature)
 
     '''
     if request.args(1) == 'risk_treatment':
