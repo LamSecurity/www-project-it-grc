@@ -1,6 +1,8 @@
 GRCbit - Governance, Risk and Compliance Software (GRC)
 
-DEMO: https://github.com/OWASP/www-project-it-grc/wiki/DEMO
+URL:    http://dev.grcbit.cloud:8000/demo
+User:   admin@email.com
+Passwd: Password01
 
 Author:  rodolfo.lopez@grcbit.com
 
